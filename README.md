@@ -1,2 +1,6 @@
-# remote-work-news
-Remote work news
+# 远程工作
+:newspaper: 抓取最新的远程工作机会
+
+ -[ ] 确定抓取那些站点，及列表URL
+ -[ ] 确定抓取站点的远程特征
+ -[ ] 确定抓取频次
