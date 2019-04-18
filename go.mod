@@ -3,6 +3,7 @@ module github.com/naiba/remote-work-news
 go 1.12
 
 require (
+	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/elazarl/goproxy v0.0.0-20190410145444-c548f45dcf1d // indirect
 	github.com/elazarl/goproxy/ext v0.0.0-20190410145444-c548f45dcf1d // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
