@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/naiba/remote-work-news/crawlers"
 )
 
@@ -13,6 +15,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		log.Println(news)
 		err = crawlerArray[i].FillContent(news)
 		if err != nil {
 			panic(err)

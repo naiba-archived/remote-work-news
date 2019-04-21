@@ -6,7 +6,6 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	rwn "github.com/naiba/remote-work-news"
-	"github.com/parnurzeal/gorequest"
 )
 
 // YizaoyiwanCrawler 一早一晚抓取
@@ -17,7 +16,6 @@ const yzywBase = "https://yizaoyiwan.com"
 
 // FetchNews 抓取列表
 func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
-	request := gorequest.New()
 	_, body, errs := request.Get(yzywBase + "/categories/employer").End()
 	if errs != nil {
 		return nil, errs[0]
@@ -41,10 +39,7 @@ func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
 			case 2:
 				t, ok := s.Attr("datetime")
 				if ok {
-					newsItem.CreatedAt, err = time.Parse("2006-01-02T15:04:05-07:00", t)
-					if err != nil {
-						panic(err)
-					}
+					newsItem.CreatedAt, _ = time.Parse("2006-01-02T15:04:05-07:00", t)
 				}
 			}
 		})
@@ -55,5 +50,17 @@ func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
 
 // FillContent 抓取内容
 func (y *YizaoyiwanCrawler) FillContent(news []rwn.News) error {
+	for i := 0; i < len(news); i++ {
+		_, body, errs := request.Get(news[i].URL).End()
+		if errs != nil {
+			return errs[0]
+		}
+		doc, err := goquery.NewDocumentFromReader(strings.NewReader(body))
+		if err != nil {
+			return err
+		}
+		news[i].Content = doc.Find("div.post-content").First().Text()
+		time.Sleep(time.Second * 10)
+	}
 	return nil
 }
