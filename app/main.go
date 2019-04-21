@@ -8,6 +8,7 @@ import (
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
+		&crawlers.RubyChinaCrawler{},
 		&crawlers.YizaoyiwanCrawler{},
 	}
 	for i := 0; i < len(crawlerArray); i++ {
@@ -15,10 +16,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(news)
+		log.Println(news[0].URL)
 		err = crawlerArray[i].FillContent(news)
 		if err != nil {
 			panic(err)
 		}
+		log.Println(news[0].Content[:30])
 	}
 }

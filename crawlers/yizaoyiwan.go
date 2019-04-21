@@ -1,7 +1,6 @@
 package crawlers
 
 import (
-	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -16,11 +15,7 @@ const yzywBase = "https://yizaoyiwan.com"
 
 // FetchNews 抓取列表
 func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
-	_, body, errs := request.Get(yzywBase + "/categories/employer").End()
-	if errs != nil {
-		return nil, errs[0]
-	}
-	doc, err := goquery.NewDocumentFromReader(strings.NewReader(body))
+	doc, err := getDocFromURL(yzywBase + "/categories/employer")
 	if err != nil {
 		return nil, err
 	}
@@ -50,17 +45,5 @@ func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
 
 // FillContent 抓取内容
 func (y *YizaoyiwanCrawler) FillContent(news []rwn.News) error {
-	for i := 0; i < len(news); i++ {
-		_, body, errs := request.Get(news[i].URL).End()
-		if errs != nil {
-			return errs[0]
-		}
-		doc, err := goquery.NewDocumentFromReader(strings.NewReader(body))
-		if err != nil {
-			return err
-		}
-		news[i].Content = doc.Find("div.post-content").First().Text()
-		time.Sleep(time.Second * crawlerDelayTime)
-	}
-	return nil
+	return innerFillContent(news, "div.post-content")
 }
