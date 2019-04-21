@@ -60,7 +60,7 @@ func (y *YizaoyiwanCrawler) FillContent(news []rwn.News) error {
 			return err
 		}
 		news[i].Content = doc.Find("div.post-content").First().Text()
-		time.Sleep(time.Second * 10)
+		time.Sleep(time.Second * crawlerDelayTime)
 	}
 	return nil
 }
