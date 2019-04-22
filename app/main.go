@@ -8,8 +8,23 @@ import (
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
+		&crawlers.LearnKuCrawler{
+			LearnKuChannel: crawlers.LearnKuGolang,
+		},
 		&crawlers.RubyChinaCrawler{},
+		&crawlers.LearnKuCrawler{
+			LearnKuChannel: crawlers.LearnKuLaravel,
+		},
 		&crawlers.YizaoyiwanCrawler{},
+		&crawlers.LearnKuCrawler{
+			LearnKuChannel: crawlers.LearnKuPHP,
+		},
+		&crawlers.LearnKuCrawler{
+			LearnKuChannel: crawlers.LearnKuPython,
+		},
+		&crawlers.LearnKuCrawler{
+			LearnKuChannel: crawlers.LearnKuVueJS,
+		},
 	}
 	for i := 0; i < len(crawlerArray); i++ {
 		news, err := crawlerArray[i].FetchNews()
