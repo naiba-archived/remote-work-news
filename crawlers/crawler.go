@@ -48,7 +48,7 @@ func innerFillContent(news []rwn.News, selector string) error {
 		if err != nil {
 			return err
 		}
-		news[i].Content = strings.TrimSpace(doc.Find(selector).First().Text())
+		news[i].Content = doc.Find(selector).First().Text()
 		//TODO: remove test code
 		return nil
 		time.Sleep(time.Second * crawlerDelayTime)

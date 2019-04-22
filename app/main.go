@@ -8,6 +8,7 @@ import (
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
+		&crawlers.SegmentFaultCrawler{},
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuGolang,
 		},
@@ -31,7 +32,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(news[0].URL)
+		log.Println(news[0].Title, news[0].URL)
 		err = crawlerArray[i].FillContent(news)
 		if err != nil {
 			panic(err)

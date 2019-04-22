@@ -27,5 +27,10 @@ func init() {
 			Desc: "LearnKu 是终身学习者的编程知识社区：保持好奇，刻意练习，每日精进",
 			Link: "https://learnku.com",
 		},
+		4: Media{
+			Name: "SegmentFault",
+			Desc: "SegmentFault 思否 为开发者提供问答、学习与交流编程知识的平台,创造属于开发者的时代!",
+			Link: "https://segmentfault.com",
+		},
 	}
 }
