@@ -7,7 +7,7 @@
 ## 站点列表
 
 - [x] 一早一晚 https://yizaoyiwan.com/categories/employer
-- [ ] RubyChina https://ruby-china.org/jobs
+- [x] RubyChina https://ruby-china.org/jobs
 - [ ] LearnKu
    - [ ] https://learnku.com/laravel/c/php-jobs?filter=recent
    - [ ] https://learnku.com/golang/c/php-jobs?filter=recent
