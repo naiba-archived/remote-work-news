@@ -2,13 +2,14 @@ package main
 
 import (
 	"log"
+	"strings"
 
 	"github.com/naiba/remote-work-news/crawlers"
 )
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
-		&crawlers.SegmentFaultCrawler{},
+		&crawlers.YuanChengDotWorkCrawler{},
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuGolang,
 		},
@@ -20,6 +21,7 @@ func main() {
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuPHP,
 		},
+		&crawlers.SegmentFaultCrawler{},
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuPython,
 		},
@@ -32,11 +34,11 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(news[0].Title, news[0].URL)
+		log.Println(news[0])
 		err = crawlerArray[i].FillContent(news)
 		if err != nil {
 			panic(err)
 		}
-		log.Println(news[0].Content[:30])
+		log.Println(strings.TrimSpace(news[0].Content)[:30])
 	}
 }
