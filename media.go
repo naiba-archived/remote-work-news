@@ -32,5 +32,15 @@ func init() {
 			Desc: "SegmentFault 思否 为开发者提供问答、学习与交流编程知识的平台,创造属于开发者的时代!",
 			Link: "https://segmentfault.com",
 		},
+		5: Media{
+			Name: "StackOverFlow",
+			Desc: "Stack Overflow是一个程序设计领域的问答网站，隶属Stack Exchange Network。网站允许注册用户提出或回答问题，还可对已有问题或答案加分、扣分或进行修改，条件是用户达到一定的“声望值”。",
+			Link: "https://stackoverflow.com",
+		},
+		6: Media{
+			Name: "SegmentFault",
+			Desc: "SegmentFault 思否 为开发者提供问答、学习与交流编程知识的平台,创造属于开发者的时代!",
+			Link: "https://segmentfault.com",
+		},
 	}
 }

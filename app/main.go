@@ -9,7 +9,7 @@ import (
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
-		&crawlers.YuanChengDotWorkCrawler{},
+		&crawlers.StackOverFlowCrawler{},
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuGolang,
 		},
@@ -25,6 +25,7 @@ func main() {
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuPython,
 		},
+		&crawlers.YuanChengDotWorkCrawler{},
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuVueJS,
 		},

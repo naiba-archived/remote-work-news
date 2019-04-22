@@ -16,5 +16,5 @@
    - [x] https://learnku.com/python/c/php-jobs?filter=recent
 - [x] SegmentFault https://segmentfault.com/groups?tab=jobs
 - [x] 远程.work https://yuancheng.work
-- [ ] StackOverFlow https://stackoverflow.com/jobs/remote-developer-jobs sort newest
+- [x] StackOverFlow https://stackoverflow.com/jobs/remote-developer-jobs sort newest
 - [ ] VueJobs https://vuejobs.com/remote-vuejs-jobs

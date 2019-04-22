@@ -2,6 +2,8 @@ package crawlers
 
 import (
 	"net/http"
+	"regexp"
+	"strconv"
 	"strings"
 	"time"
 
@@ -40,6 +42,27 @@ func getDocFromURL(url string) (*goquery.Document, error) {
 		return nil, errs[0]
 	}
 	return goquery.NewDocumentFromReader(strings.NewReader(body))
+}
+
+var timeRegexp = regexp.MustCompile(`(\d+)(\w)\sago`)
+
+func calcCreateTime(raw string) time.Time {
+	item := timeRegexp.FindStringSubmatch(raw)
+	origin := time.Now()
+	if len(item) == 3 {
+		num, _ := strconv.Atoi(item[1])
+		switch item[2] {
+		case "h":
+			origin = origin.Add(time.Hour * time.Duration(-1*num))
+		case "d":
+			origin = origin.Add(time.Hour * time.Duration(-1*num*24))
+		case "m":
+			origin = origin.Add(time.Hour * time.Duration(-1*num*24*30))
+		case "y":
+			origin = origin.Add(time.Hour * time.Duration(-1*num*24*30*12))
+		}
+	}
+	return origin
 }
 
 func innerFillContent(news []rwn.News, selector string) error {
