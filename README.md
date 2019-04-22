@@ -8,12 +8,12 @@
 
 - [x] 一早一晚 https://yizaoyiwan.com/categories/employer
 - [x] RubyChina https://ruby-china.org/jobs
-- [ ] LearnKu
-   - [ ] https://learnku.com/laravel/c/php-jobs?filter=recent
-   - [ ] https://learnku.com/golang/c/php-jobs?filter=recent
-   - [ ] https://learnku.com/php/c/php-jobs?filter=recent
-   - [ ] https://learnku.com/vuejs/c/php-jobs?filter=recent
-   - [ ] https://learnku.com/python/c/php-jobs?filter=recent
+- [x] LearnKu
+   - [x] https://learnku.com/laravel/c/php-jobs?filter=recent
+   - [x] https://learnku.com/golang/c/php-jobs?filter=recent
+   - [x] https://learnku.com/php/c/php-jobs?filter=recent
+   - [x] https://learnku.com/vuejs/c/php-jobs?filter=recent
+   - [x] https://learnku.com/python/c/php-jobs?filter=recent
 - [ ] SegmentFault https://segmentfault.com/groups?tab=jobs
 - [ ] 远程.work https://yuancheng.work
 - [ ] StackOverFlow https://stackoverflow.com/jobs/remote-developer-jobs sort newest

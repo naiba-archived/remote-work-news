@@ -22,5 +22,10 @@ func init() {
 			Desc: "由众多爱好者共同维护的 Ruby 中文社区，使用 Homeland 构建，并采用 Docker 部署。",
 			Link: "https://ruby-china.org",
 		},
+		3: Media{
+			Name: "LearnKu",
+			Desc: "LearnKu 是终身学习者的编程知识社区：保持好奇，刻意练习，每日精进",
+			Link: "https://learnku.com",
+		},
 	}
 }
