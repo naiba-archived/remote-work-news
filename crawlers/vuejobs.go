@@ -1,6 +1,11 @@
 package crawlers
 
 import (
+	"encoding/json"
+	"errors"
+	"log"
+	"regexp"
+
 	rwn "github.com/naiba/remote-work-news"
 )
 
@@ -18,15 +23,34 @@ type vueJobsData struct {
 	}
 }
 
+var vueJobsDataRegexp = regexp.MustCompile(`window\.openings\s=\s(.*)\s*<\/script>\s*<\/head>`)
+
 // FetchNews 抓取列表
 func (v *VueJobsCrawler) FetchNews() ([]rwn.News, error) {
 	_, body, errs := request.Get("https://vuejobs.com/remote-vuejs-jobs").End()
 	if errs != nil {
 		return nil, errs[0]
 	}
+	res := vueJobsDataRegexp.FindStringSubmatch(body)
+	if len(res) != 2 {
+		return nil, errors.New("VueJobsCrawler needs to update")
+	}
 	var news []rwn.News
-
-	news = append(news, item)
+	var vjd []vueJobsData
+	err := json.Unmarshal([]byte(res[1]), &vjd)
+	if err != nil {
+		return nil, err
+	}
+	log.Println(res[1], vjd)
+	for i := 0; i < len(vjd); i++ {
+		var item rwn.News
+		item.Title = vjd[i].Title
+		item.URL = vjd[i].Route
+		item.Content = vjd[i].Description
+		item.Pusher = vjd[i].Company.Name
+		item.PusherLink = vjd[i].Company.Route
+		news = append(news, item)
+	}
 	return news, nil
 }
 

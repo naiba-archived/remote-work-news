@@ -9,6 +9,7 @@ import (
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
+		&crawlers.VueJobsCrawler{},
 		&crawlers.ZipRecruiterCrawler{},
 		&crawlers.StackOverFlowCrawler{},
 		&crawlers.LearnKuCrawler{
