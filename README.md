@@ -4,7 +4,7 @@
 
 - [x] 确定抓取那些站点，及列表 URL
 - [x] 针对站点编写抓取 Lib
-- [ ] 设计前端界面
+- [x] 设计前端界面 copy https://joyqi.com/CNDevDaily
 
 ## 站点列表
 
