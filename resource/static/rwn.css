@@ -1,0 +1,155 @@
+body {
+    background: #FFF;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+}
+
+cite {
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box
+}
+
+a {
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+nav {
+    text-align: center
+}
+
+nav h1 {
+    font-size: 32px;
+    margin: 20px 0 5px 0;
+    padding: 0
+}
+
+nav cite {
+    font-size: 14px;
+    color: #777
+}
+
+nav h3 {
+    font-family: "Courier New", monospace;
+    padding: 0;
+    margin: 10px 0 0 0
+}
+
+nav h3 a {
+    color: #FFF;
+    background: #333;
+    padding: 3px 5px;
+}
+
+nav h3 a:hover {
+    background: #999;
+    text-decoration: none
+}
+
+.list h2 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #d9534f;
+    margin: 40px 0 10px 0;
+    padding: 0;
+    font-family: "Courier New", monospace;
+}
+
+.list h3 {
+    font-size: 15px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.list ul {
+    margin: 0;
+    padding: 0 0 0 30px;
+    list-style: none;
+}
+
+.list ul li {
+    line-height: 28px;
+    margin-bottom: 10px;
+}
+
+.list ul li:hover {
+    background: #F4F4F4;
+}
+
+.list ul li blockquote {
+    padding: 0 0 0 5px;
+    margin: 0 0 0 5px;
+    color: #888;
+    font-size: 13px;
+    border-left: 2px solid #ddd;
+    line-height: 24px;
+}
+
+.list h3 a {
+    color: #0000DD;
+    position: relative;
+}
+
+.list h3 a i {
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 5px;
+    background: #000;
+    left: -16px;
+    top: 7px;
+}
+
+.list h3 a:visited {
+    color: #AAA;
+}
+
+.list h3 a:visited i {
+    background: #AAA;
+}
+
+.meta {
+    margin: 5px 0;
+    font-size: 12px;
+    padding: 0;
+    line-height: 16px;
+    color: #666;
+}
+
+.meta a {
+    color: #444;
+}
+
+.meta a:hover {
+    color: #000;
+}
+
+.no {
+    padding: 0;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 16px;
+    color: #777
+}
+
+footer {
+    margin: 40px 0;
+    text-align: center;
+    color: #555;
+    font-size: 13px;
+}

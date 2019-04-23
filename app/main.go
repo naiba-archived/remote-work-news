@@ -1,11 +1,13 @@
 package main
 
 import (
-	"log"
-	"strings"
-
 	"github.com/naiba/remote-work-news/crawlers"
 )
+
+/*
+每天 12 点抓取一次，依据 URL 去重，保存到数据库
+遇到错误 serverChan 通报管理员
+*/
 
 func main() {
 	var crawlerArray = []crawlers.Crawler{
@@ -37,11 +39,9 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		log.Println(news[0])
 		err = crawlerArray[i].FillContent(news)
 		if err != nil {
 			panic(err)
 		}
-		log.Println(strings.TrimSpace(news[0].Content)[:30])
 	}
 }
