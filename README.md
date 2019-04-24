@@ -6,6 +6,7 @@
 - [x] 针对站点编写抓取 Lib
 - [x] 设计前端界面 copy https://joyqi.com/CNDevDaily
 - [ ] Docker 化，GitHub Actions 自动部署
+- [ ] Debug
 
 ## 站点列表
 
