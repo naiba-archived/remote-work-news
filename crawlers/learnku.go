@@ -1,6 +1,7 @@
 package crawlers
 
 import (
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -41,10 +42,12 @@ func (k *LearnKuCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.PusherLink = pusherLink.AttrOr("href", "")
 		newsItem.Pusher = pusherLink.Children().First().AttrOr("alt", "")
 		titleAndLink := s.Find("a.topic-title-wrap").First()
-		newsItem.Title = titleAndLink.Find("span").First().Text()
+		newsItem.Title = titleAndLink.Find("span.topic-title").First().Text()
 		newsItem.URL = titleAndLink.AttrOr("href", "")
 		newsItem.PublishedAt, _ = time.Parse("2006-01-02 15:04:05", s.Find("abbr.timeago").First().AttrOr("title", ""))
-		news = append(news, newsItem)
+		if strings.Contains(newsItem.Title, "远程") {
+			news = append(news, newsItem)
+		}
 	})
 	return news, nil
 }
