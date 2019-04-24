@@ -43,7 +43,7 @@ func (k *LearnKuCrawler) FetchNews() ([]rwn.News, error) {
 		titleAndLink := s.Find("a.topic-title-wrap").First()
 		newsItem.Title = titleAndLink.Find("span").First().Text()
 		newsItem.URL = titleAndLink.AttrOr("href", "")
-		newsItem.CreatedAt, _ = time.Parse("2006-01-02 15:04:05", s.Find("abbr.timeago").First().AttrOr("title", ""))
+		newsItem.PublishedAt, _ = time.Parse("2006-01-02 15:04:05", s.Find("abbr.timeago").First().AttrOr("title", ""))
 		news = append(news, newsItem)
 	})
 	return news, nil

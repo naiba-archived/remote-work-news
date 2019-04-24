@@ -30,7 +30,7 @@ func (v *ZipRecruiterCrawler) FetchNews() ([]rwn.News, error) {
 	var news []rwn.News
 	for i := 0; i < len(zrd.Data); i++ {
 		var item rwn.News
-		item.CreatedAt, _ = time.Parse("2006-01-02 15:04:05", zrd.Data[i].PublishedAt)
+		item.PublishedAt, _ = time.Parse("2006-01-02 15:04:05", zrd.Data[i].PublishedAt)
 		item.Title = zrd.Data[i].Title
 		item.URL = zrd.Data[i].URL
 		item.Pusher = zrd.Data[i].Company

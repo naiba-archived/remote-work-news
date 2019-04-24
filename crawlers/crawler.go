@@ -72,8 +72,6 @@ func innerFillContent(news []rwn.News, selector string) error {
 			return err
 		}
 		news[i].Content = doc.Find(selector).First().Text()
-		//TODO: remove test code
-		return nil
 		time.Sleep(time.Second * crawlerDelayTime)
 	}
 	return nil

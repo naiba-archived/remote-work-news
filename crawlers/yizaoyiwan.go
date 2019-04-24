@@ -34,7 +34,7 @@ func (y *YizaoyiwanCrawler) FetchNews() ([]rwn.News, error) {
 			case 2:
 				t, ok := s.Attr("datetime")
 				if ok {
-					newsItem.CreatedAt, _ = time.Parse("2006-01-02T15:04:05-07:00", t)
+					newsItem.PublishedAt, _ = time.Parse("2006-01-02T15:04:05-07:00", t)
 				}
 			}
 		})

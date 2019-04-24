@@ -26,7 +26,7 @@ func (y *YuanChengDotWorkCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.Title = "「" + title.Find("span.label-primary").Text() + "」" + link.Text()
 		newsItem.URL = link.AttrOr("href", "")
 		newsItem.Pusher = title.Find("small").First().Text()
-		newsItem.CreatedAt, _ = time.Parse("2006-01-02 15:04:05",
+		newsItem.PublishedAt, _ = time.Parse("2006-01-02 15:04:05",
 			s.Find("div.job-date").AttrOr("date", ""))
 		news = append(news, newsItem)
 	})
