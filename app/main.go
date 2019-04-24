@@ -1,15 +1,17 @@
 package main
 
 import (
+	"log"
+	"net/http"
+	"net/url"
+	"reflect"
+	"sync"
+
+	"github.com/naiba/com"
+	rwn "github.com/naiba/remote-work-news"
 	"github.com/naiba/remote-work-news/crawlers"
 	"github.com/robfig/cron"
-	"github.com/naiba/remote-work-news"
-	"github.com/naiba/com"
 )
-
-/*
-遇到错误 serverChan 通报管理员
-*/
 
 func main() {
 	var crawlerTargetForgin = []crawlers.Crawler{
@@ -17,6 +19,7 @@ func main() {
 		&crawlers.ZipRecruiterCrawler{},
 		&crawlers.StackOverFlowCrawler{},
 	}
+
 	var crawlerTargetChina = []crawlers.Crawler{
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuGolang,
@@ -39,10 +42,7 @@ func main() {
 		},
 	}
 
-	do(crawlerTargetChina)
-	do(crawlerTargetForgin)
-	select{}
-
+	// 抓取计划
 	c := cron.New()
 	c.AddFunc("0 0 0 * * *", func() {
 		do(crawlerTargetChina)
@@ -54,20 +54,42 @@ func main() {
 }
 
 func do(c []crawlers.Crawler) {
+	var errorMsg []byte
 	var allNews []rwn.News
+	var l sync.Mutex
+	var wg sync.WaitGroup
+	wg.Add(len(c))
 	for i := 0; i < len(c); i++ {
-		news, err := c[i].FetchNews()
-		if err != nil {
-			panic(err)
-		}
-		err = c[i].FillContent(news)
-		if err != nil {
-			panic(err)
-		}
-		allNews = append(allNews,news...)
+		go func(i int) {
+			news, err := c[i].FetchNews()
+			if err != nil {
+				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+			}
+			err = c[i].FillContent(news)
+			if err != nil {
+				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+			}
+			l.Lock()
+			allNews = append(allNews, news...)
+			l.Unlock()
+			wg.Done()
+		}(i)
 	}
+	wg.Wait()
 	for i := 0; i < len(allNews); i++ {
 		allNews[i].Hash = com.MD5(allNews[i].URL)
 		rwn.DB.Save(allNews[i])
 	}
+	if len(errorMsg) > 0 {
+		serverChan("「远程工作」抓取错误", string(errorMsg))
+	}
+}
+
+func serverChan(title, content string) {
+	log.Println(title, content)
+	params := url.Values{
+		"text": {title},
+		"desp": {content},
+	}
+	http.PostForm("https://sc.ftqq.com/"+rwn.C.ServerChan+".send", params)
 }
