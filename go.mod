@@ -7,9 +7,12 @@ require (
 	github.com/elazarl/goproxy v0.0.0-20190410145444-c548f45dcf1d // indirect
 	github.com/elazarl/goproxy/ext v0.0.0-20190410145444-c548f45dcf1d // indirect
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
+	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
+	github.com/gin-gonic/gin v1.3.0
 	github.com/jinzhu/gorm v1.9.4
 	github.com/jinzhu/now v1.0.0 // indirect
 	github.com/kr/pretty v0.1.0 // indirect
+	github.com/mattn/go-isatty v0.0.7 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/naiba/com v0.0.0-20181213033619-927647a4f54e
 	github.com/parnurzeal/gorequest v0.2.15-0.20190114090633-b0604454e3c3
@@ -18,4 +21,5 @@ require (
 	github.com/smartystreets/goconvey v0.0.0-20190330032615-68dc04aab96a // indirect
 	github.com/spf13/viper v1.3.2
 	golang.org/x/net v0.0.0-20190415214537-1da14a5a36f2 // indirect
+	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 )

@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>远程工作</title>
     <link href="/static/rwn.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="/static/logo.png" />
 </head>
 
 <body>
@@ -15,35 +16,44 @@
         <div class="container">
             <nav>
                 <h1>远程工作</h1>
-                <cite>一个勤劳的机器人，爬取远程工作相关的内容。懒懒的主人创造了我，欢迎关注我🤖</cite>
+                <cite>一个勤劳的机器人，爬取远程工作相关的内容。懒懒的主人创造了我，下面是我抓取的站点，欢迎关注我🤖</cite>
                 <h3>
-                    <a href="https://gang.si" target="_blank">钢丝导航</a>
+                    {{range $k,$v := .media}}
+                    <a href="{{$v.Link}}" rel="nofollow" title="{{$v.Desc}}" target="_blank">{{$v.Name}}</a>
                     |
-                    <a href="https://github.com/naiba" target="_blank">奶爸</a>
+                    {{end}}
+                    <a href="//shang.qq.com/wpa/qunwpa?idkey=33ec2efcc90d9a5fd17bd49161303e617d95564699b75f4df8f6ec85769ef86b"
+                        title="Q群：1016797014" target="_blank">加入交流群</a>
                 </h3>
             </nav>
-
             <div class="list">
-                <h2>2019-04-23</h2>
+                {{range .job}}
+                <h2>{{.Day}}</h2>
                 <ul>
+                    {{range .Jobs}}
                     <li>
-                        <h3><a href="javascript:void();" target="_blank"><i></i>这里是标题</a></h3>
+                        <h3><a href="{{if .URL}}{{.URL}}{{else}}javascript:void();{{end}}" rel="nofollow"
+                                target="_blank"><i></i>{{.Title}}</a></h3>
                         <p class="meta">
-                            <a href="javascript:void();" target="_blank">来源</a>
+                            <a href="{{if (index $.media .MediaID).Link}}{{(index $.media .MediaID).Link}}{{else}}javascript:void();{{end}}"
+                                rel="nofollow" target="_blank">{{(index $.media .MediaID).Name}}</a>
                             |
-                            <a href="javascript:void();" target="_blank">发布人</a>
+                            <a href="{{if .PusherLink}}{{.PusherLink}}{{else}}javascript:void();{{end}}" rel="nofollow"
+                                target="_blank">{{.Pusher}}</a>
                             分享于
-                            <a href="javascript:void();" target="_blank">6 天前</a>
+                            <a href="javascript:void();" target="_blank">{{.PublishedAt}}</a>
                         </p>
-                        <blockquote>啦啦啦啦吧啦吧啦，这是简介</blockquote>
+                        <blockquote>{{printf "%.25s" .Content}}</blockquote>
                     </li>
+                    {{end}}
                 </ul>
+                {{end}}
             </div>
 
             <footer>
-                <a href="mailto:hi@nai.ba">联系我们</a>
+                <a href="mailto:hi@nai.ba">联系</a>
                 &nbsp;|&nbsp;
-                由 <a target="_blank" href="https://github.com/naiba">奶爸</a> 打造
+                由 <a target="_blank" href="https://github.com/naiba">奶爸</a> 打造 · build {{.version}}
                 &nbsp;|&nbsp;
                 © 2019 远程工作
             </footer>

@@ -1,12 +1,14 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"net/url"
 	"reflect"
+	"strings"
 	"sync"
+	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/naiba/com"
 	rwn "github.com/naiba/remote-work-news"
 	"github.com/naiba/remote-work-news/crawlers"
@@ -51,6 +53,48 @@ func main() {
 		do(crawlerTargetForgin)
 	})
 	c.Start()
+
+	// Web服务
+	r := gin.Default()
+	r.Static("/static", "resource/static")
+	r.LoadHTMLGlob("resource/template/*")
+	r.GET("/", func(ctx *gin.Context) {
+		var jobs []struct {
+			Day  string
+			Jobs []rwn.News
+		}
+		var news []rwn.News
+		rwn.DB.Where("created_at > ?", time.Now().Add(-time.Hour*24*3)).Order("created_at DESC").Find(&news)
+		var currKey string
+		var job struct {
+			Day  string
+			Jobs []rwn.News
+		}
+		for i := 0; i < len(news); i++ {
+			key := news[i].CreatedAt.Format("2006-01-02")
+			if key != currKey {
+				currKey = key
+				if len(job.Jobs) > 0 {
+					jobs = append(jobs, job)
+				}
+				job = struct {
+					Day  string
+					Jobs []rwn.News
+				}{
+					Day:  currKey,
+					Jobs: make([]rwn.News, 0),
+				}
+			}
+			job.Jobs = append(job.Jobs, news[i])
+		}
+		jobs = append(jobs, job)
+		ctx.HTML(http.StatusOK, "index.html", gin.H{
+			"media":   rwn.Medias,
+			"job":     jobs,
+			"version": rwn.C.BuildVersion,
+		})
+	})
+	r.Run()
 }
 
 func do(c []crawlers.Crawler) {
@@ -65,10 +109,10 @@ func do(c []crawlers.Crawler) {
 			if err != nil {
 				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
 			}
-			err = c[i].FillContent(news)
-			if err != nil {
-				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
-			}
+			// err = c[i].FillContent(news)
+			// if err != nil {
+			// 	errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+			// }
 			l.Lock()
 			allNews = append(allNews, news...)
 			l.Unlock()
@@ -76,8 +120,11 @@ func do(c []crawlers.Crawler) {
 		}(i)
 	}
 	wg.Wait()
+	now := time.Now()
 	for i := 0; i < len(allNews); i++ {
+		allNews[i].Title = strings.TrimSpace(allNews[i].Title)
 		allNews[i].Hash = com.MD5(allNews[i].URL)
+		allNews[i].CreatedAt = now
 		rwn.DB.Save(allNews[i])
 	}
 	if len(errorMsg) > 0 {
@@ -86,7 +133,6 @@ func do(c []crawlers.Crawler) {
 }
 
 func serverChan(title, content string) {
-	log.Println(title, content)
 	params := url.Values{
 		"text": {title},
 		"desp": {content},

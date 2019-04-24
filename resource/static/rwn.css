@@ -53,6 +53,7 @@ nav h3 a {
     color: #FFF;
     background: #333;
     padding: 3px 5px;
+    line-height: 30px;
 }
 
 nav h3 a:hover {
