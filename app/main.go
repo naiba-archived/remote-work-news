@@ -18,6 +18,12 @@ import (
 var crawling bool
 
 func main() {
+
+	//test code
+	// x := &crawlers.VueJobsCrawler{}
+	// log.Println(x.FetchNews())
+	// os.Exit(0)
+
 	var crawlerTargetForgin = []crawlers.Crawler{
 		&crawlers.VueJobsCrawler{},
 		&crawlers.ZipRecruiterCrawler{},
@@ -94,10 +100,10 @@ func main() {
 		}
 		jobs = append(jobs, job)
 		ctx.HTML(http.StatusOK, "index.html", gin.H{
-			"media":   rwn.Medias,
-			"job":     jobs,
-			"crawling":     crawling,
-			"version": rwn.C.BuildVersion,
+			"media":    rwn.Medias,
+			"job":      jobs,
+			"crawling": crawling,
+			"version":  rwn.C.BuildVersion,
 		})
 	})
 	r.Run()
@@ -118,11 +124,11 @@ func do(c []crawlers.Crawler) {
 		go func(i int) {
 			news, err := c[i].FetchNews()
 			if err != nil {
-				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c[i]).String() + ":" + err.Error() + "\n")...)
 			}
 			err = c[i].FillContent(news)
 			if err != nil {
-				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c[i]).String() + ":" + err.Error() + "\n")...)
 			}
 			l.Lock()
 			allNews = append(allNews, news...)
