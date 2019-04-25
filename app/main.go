@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -67,6 +68,11 @@ func main() {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	r := gin.Default()
+	r.SetFuncMap(template.FuncMap{
+		"tf": func(t time.Time) string {
+			return t.Format("2006-01-02 15:04")
+		},
+	})
 	r.Static("/static", "resource/static")
 	r.LoadHTMLGlob("resource/template/*")
 	r.GET("/", func(ctx *gin.Context) {

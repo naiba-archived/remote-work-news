@@ -32,16 +32,16 @@
                 <ul>
                     {{range .Jobs}}
                     <li>
-                        <h3><a href="{{if .URL}}{{.URL}}{{else}}javascript:void();{{end}}" rel="nofollow"
+                        <h3><a href="{{if .URL}}{{.URL}}{{else}}javascript:void(0){{end}}" rel="nofollow"
                                 target="_blank"><i></i>{{.Title}}</a></h3>
                         <p class="meta">
-                            <a href="{{if (index $.media .MediaID).Link}}{{(index $.media .MediaID).Link}}{{else}}javascript:void();{{end}}"
+                            <a href="{{if (index $.media .MediaID).Link}}{{(index $.media .MediaID).Link}}{{else}}javascript:void(0){{end}}"
                                 rel="nofollow" target="_blank">{{(index $.media .MediaID).Name}}</a>
                             |
-                            <a href="{{if .PusherLink}}{{.PusherLink}}{{else}}javascript:void();{{end}}" rel="nofollow"
+                            <a href="{{if .PusherLink}}{{.PusherLink}}{{else}}javascript:void(0){{end}}" rel="nofollow"
                                 target="_blank">{{.Pusher}}</a>
                             分享于
-                            <a href="javascript:void();" target="_blank">{{.PublishedAt}}</a>
+                            <a href="javascript:void(0)" target="_blank">{{tf .PublishedAt}}</a>
                         </p>
                         <blockquote>{{printf "%.200s" .Content}}</blockquote>
                     </li>
