@@ -44,6 +44,7 @@ func (v *VueJobsCrawler) FetchNews() ([]rwn.News, error) {
 	log.Println(res[1], vjd)
 	for i := 0; i < len(vjd); i++ {
 		var item rwn.News
+		item.MediaID = 7
 		item.Title = vjd[i].Title
 		item.URL = vjd[i].Route
 		item.Content = vjd[i].Description

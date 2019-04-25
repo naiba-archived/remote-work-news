@@ -38,9 +38,19 @@ func init() {
 			Link: "https://stackoverflow.com",
 		},
 		6: Media{
-			Name: "SegmentFault",
-			Desc: "SegmentFault 思否 为开发者提供问答、学习与交流编程知识的平台,创造属于开发者的时代!",
-			Link: "https://segmentfault.com",
+			Name: "远程.work",
+			Desc: "远程.work是远程工作招聘网站,帮助企业和团队找到远程工作员工,为远程工作者寻找远程工作。",
+			Link: "https://yuancheng.work",
+		},
+		7: Media{
+			Name: "VueJobs",
+			Desc: "VueJobs has been developed by Vue.js and Laravel enthusiasts whose aim is to contribute to the growing community by helping companies find Vue.js talent around the world. When you register with Vue.js jobs, companies will be able to list jobs and developers will have the chance to apply for those jobs. ",
+			Link: "https://vuejobs.com",
+		},
+		8: Media{
+			Name: "ZipRecruiter",
+			Desc: "Search for jobs hiring in your area using ZipRecruiter's job search engine - the best way to find a job.",
+			Link: "https://www.ziprecruiter.com",
 		},
 	}
 }

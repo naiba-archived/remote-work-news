@@ -20,7 +20,7 @@ func (y *YuanChengDotWorkCrawler) FetchNews() ([]rwn.News, error) {
 	var news []rwn.News
 	doc.Find("div.job-brief").Each(func(i int, s *goquery.Selection) {
 		var newsItem rwn.News
-		newsItem.MediaID = 1
+		newsItem.MediaID = 6
 		title := s.Find("div.job-body").First()
 		link := title.Find("a.job-title").First()
 		newsItem.Title = "「" + title.Find("span.label-primary").Text() + "」" + link.Text()
