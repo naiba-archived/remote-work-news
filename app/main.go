@@ -15,6 +15,8 @@ import (
 	"github.com/robfig/cron"
 )
 
+var crawling bool
+
 func main() {
 	var crawlerTargetForgin = []crawlers.Crawler{
 		&crawlers.VueJobsCrawler{},
@@ -94,6 +96,7 @@ func main() {
 		ctx.HTML(http.StatusOK, "index.html", gin.H{
 			"media":   rwn.Medias,
 			"job":     jobs,
+			"crawling":     crawling,
 			"version": rwn.C.BuildVersion,
 		})
 	})
@@ -101,6 +104,11 @@ func main() {
 }
 
 func do(c []crawlers.Crawler) {
+	if crawling {
+		serverChan("「远程工作」抓取冲突了", "")
+		return
+	}
+	crawling = true
 	var errorMsg []byte
 	var allNews []rwn.News
 	var l sync.Mutex
@@ -133,6 +141,7 @@ func do(c []crawlers.Crawler) {
 	if len(errorMsg) > 0 {
 		serverChan("「远程工作」抓取错误", string(errorMsg))
 	}
+	crawling = false
 }
 
 func serverChan(title, content string) {
