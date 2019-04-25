@@ -27,3 +27,4 @@
 ## 搜索引擎
 
 - ZipRecruiter https://www.ziprecruiter.com
+- Linux 下代理构建 `sudo docker build --build-arg http_proxy=http://172.17.0.1:8087 --build-arg https_proxy=http://172.17.0.1:8087 -t naiba/rwn .`
