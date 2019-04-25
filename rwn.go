@@ -12,6 +12,7 @@ import (
 type Config struct {
 	BuildVersion string `mapstructure:"-"`
 	ServerChan   string `mapstructure:"server_chan"`
+	Debug        bool
 }
 
 // DB 数据库对象
@@ -25,13 +26,6 @@ var BuildVersion = "_BuildVersion_"
 
 func init() {
 	var err error
-	DB, err = gorm.Open("sqlite3", "data/rwn.db")
-	if err != nil {
-		panic(err)
-	}
-	DB = DB.Debug()
-	DB.AutoMigrate(&News{})
-
 	viper.SetConfigFile("data/rwn.yml")
 	err = viper.ReadInConfig()
 	if err != nil {
@@ -42,4 +36,13 @@ func init() {
 		panic(err)
 	}
 	C.BuildVersion = BuildVersion[:8]
+
+	DB, err = gorm.Open("sqlite3", "data/rwn.db")
+	if err != nil {
+		panic(err)
+	}
+	if C.Debug {
+		DB = DB.Debug()
+	}
+	DB.AutoMigrate(&News{})
 }

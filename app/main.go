@@ -55,6 +55,9 @@ func main() {
 	c.Start()
 
 	// Web服务
+	if !rwn.C.Debug {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	r := gin.Default()
 	r.Static("/static", "resource/static")
 	r.LoadHTMLGlob("resource/template/*")
@@ -109,10 +112,10 @@ func do(c []crawlers.Crawler) {
 			if err != nil {
 				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
 			}
-			// err = c[i].FillContent(news)
-			// if err != nil {
-			// 	errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
-			// }
+			err = c[i].FillContent(news)
+			if err != nil {
+				errorMsg = append(errorMsg, ("- " + reflect.TypeOf(c).String() + ":" + err.Error() + "\n")...)
+			}
 			l.Lock()
 			allNews = append(allNews, news...)
 			l.Unlock()

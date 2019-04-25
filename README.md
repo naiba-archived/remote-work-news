@@ -5,8 +5,9 @@
 - [x] 确定抓取那些站点，及列表 URL
 - [x] 针对站点编写抓取 Lib
 - [x] 设计前端界面 copy https://joyqi.com/CNDevDaily
-- [ ] Docker 化，GitHub Actions 自动部署
-- [ ] Debug
+- [x] Docker 化，GitHub Actions 自动部署
+   - Linux 下代理构建 `sudo docker build --build-arg http_proxy=http://172.17.0.1:8087 --build-arg https_proxy=http://172.17.0.1:8087 -t naiba/rwn .`
+- [x] Debug
 
 ## 站点列表
 
@@ -27,4 +28,3 @@
 ## 搜索引擎
 
 - ZipRecruiter https://www.ziprecruiter.com
-- Linux 下代理构建 `sudo docker build --build-arg http_proxy=http://172.17.0.1:8087 --build-arg https_proxy=http://172.17.0.1:8087 -t naiba/rwn .`
