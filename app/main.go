@@ -2,9 +2,11 @@ package main
 
 import (
 	"html/template"
+	"log"
 	"net/http"
 	"net/url"
 	"reflect"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -54,11 +56,19 @@ func main() {
 	}
 
 	// 抓取计划
+	_, offset := time.Now().Zone()
+	offset /= 3600
+	chinaOffset := 12 + offset - 7
+	if chinaOffset < 0 {
+		chinaOffset += 24
+	}
+	usaOffset := 12 + offset + 4
+	log.Println("chinaOffset:", chinaOffset, "usaOffset:", usaOffset)
 	c := cron.New()
-	c.AddFunc("0 0 4 * * *", func() {
+	c.AddFunc("0 0 "+strconv.Itoa(chinaOffset)+" * * *", func() {
 		do(crawlerTargetChina)
 	})
-	c.AddFunc("0 0 16 * * *", func() {
+	c.AddFunc("0 0 "+strconv.Itoa(usaOffset)+" * * *", func() {
 		do(crawlerTargetForgin)
 	})
 	c.Start()
