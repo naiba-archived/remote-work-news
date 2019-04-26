@@ -55,10 +55,10 @@ func main() {
 
 	// 抓取计划
 	c := cron.New()
-	c.AddFunc("0 0 0 * * *", func() {
+	c.AddFunc("0 0 4 * * *", func() {
 		do(crawlerTargetChina)
 	})
-	c.AddFunc("0 0 12 * * *", func() {
+	c.AddFunc("0 0 16 * * *", func() {
 		do(crawlerTargetForgin)
 	})
 	c.Start()
