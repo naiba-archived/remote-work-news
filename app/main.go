@@ -58,12 +58,12 @@ func main() {
 	// 抓取计划
 	_, offset := time.Now().Zone()
 	offset /= 3600
-	chinaOffset := 12 + offset - 7
+	chinaOffset := 12 + offset - 8
 	if chinaOffset < 0 {
 		chinaOffset += 24
 	}
-	usaOffset := 12 + offset + 4
-	log.Println("chinaOffset:", chinaOffset, "usaOffset:", usaOffset)
+	usaOffset := 12 + offset + 5
+	log.Println("offset", offset, "chinaOffset:", chinaOffset, "usaOffset:", usaOffset)
 	c := cron.New()
 	c.AddFunc("0 0 "+strconv.Itoa(chinaOffset)+" * * *", func() {
 		do(crawlerTargetChina)
