@@ -35,7 +35,9 @@ func (v *ZipRecruiterCrawler) FetchNews() ([]rwn.News, error) {
 		item.Title = zrd.Data[i].Title
 		item.URL = zrd.Data[i].URL
 		item.Pusher = zrd.Data[i].Company
-		news = append(news, item)
+		if matchRemoteEnglish.MatchString(item.Title) {
+			news = append(news, item)
+		}
 	}
 	return news, nil
 }

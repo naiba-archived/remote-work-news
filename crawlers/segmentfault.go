@@ -33,7 +33,9 @@ func (f *SegmentFaultCrawler) FetchNews() ([]rwn.News, error) {
 				newsItem.PusherLink = segmentfaultBase + s.AttrOr("href", "")
 			}
 		})
-		news = append(news, newsItem)
+		if matchRemoteChinese.MatchString((newsItem.Title)) {
+			news = append(news, newsItem)
+		}
 	})
 	return news, nil
 }

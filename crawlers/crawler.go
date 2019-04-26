@@ -24,6 +24,8 @@ type Crawler interface {
 }
 
 var request *gorequest.SuperAgent
+var matchRemoteChinese = regexp.MustCompile(`[远遠]程`)
+var matchRemoteEnglish = regexp.MustCompile(`(?i)remote`)
 
 func init() {
 	request = gorequest.New().Retry(crawlerRetryTime, time.Second*3, http.StatusGatewayTimeout,

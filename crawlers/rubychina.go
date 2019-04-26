@@ -30,7 +30,9 @@ func (r *RubyChinaCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.Pusher = user.Text()
 		newsItem.PusherLink = rubyChinaBase + user.AttrOr("href", "")
 		newsItem.PublishedAt, _ = time.Parse("2006-01-02T15:04:05-07:00", s.Find("abbr.timeago").First().AttrOr("title", ""))
-		news = append(news, newsItem)
+		if matchRemoteChinese.MatchString((newsItem.Title)) {
+			news = append(news, newsItem)
+		}
 	})
 	return news, nil
 }

@@ -26,7 +26,9 @@ func (s *StackOverFlowCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.URL = stackOverFlowBase + title.AttrOr("href", "")
 		newsItem.PublishedAt = calcCreateTime(s.Find("span.ps-absolute.fc-black-500").First().Text())
 		newsItem.Pusher = s.Find("div.-company").Text()
-		news = append(news, newsItem)
+		if matchRemoteEnglish.MatchString((newsItem.Title)) {
+			news = append(news, newsItem)
+		}
 	})
 	return news, nil
 }

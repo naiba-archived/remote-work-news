@@ -1,7 +1,6 @@
 package crawlers
 
 import (
-	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -45,7 +44,7 @@ func (k *LearnKuCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.Title = titleAndLink.Find("span.topic-title").First().Text()
 		newsItem.URL = titleAndLink.AttrOr("href", "")
 		newsItem.PublishedAt, _ = time.Parse("2006-01-02 15:04:05", s.Find("abbr.timeago").First().AttrOr("title", ""))
-		if strings.Contains(newsItem.Title, "远程") {
+		if matchRemoteChinese.MatchString(newsItem.Title) {
 			news = append(news, newsItem)
 		}
 	})

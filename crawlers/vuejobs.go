@@ -50,7 +50,9 @@ func (v *VueJobsCrawler) FetchNews() ([]rwn.News, error) {
 		item.Content = vjd[i].Description
 		item.Pusher = vjd[i].Company.Name
 		item.PusherLink = vjd[i].Company.Route
-		news = append(news, item)
+		if matchRemoteEnglish.MatchString((item.Title)) {
+			news = append(news, item)
+		}
 	}
 	return news, nil
 }
