@@ -33,7 +33,7 @@ func (v *VueJobsCrawler) FetchNews() ([]rwn.News, error) {
 	}
 	res := vueJobsDataRegexp.FindStringSubmatch(body)
 	if len(res) != 2 {
-		return nil, errors.New("VueJobsCrawler needs to update")
+		return nil, errors.New("VueJobsCrawler needs to update:" + body)
 	}
 	var news []rwn.News
 	var vjd []vueJobsData
