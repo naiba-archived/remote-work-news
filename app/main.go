@@ -90,7 +90,7 @@ func main() {
 			Jobs []rwn.News
 		}
 		var news []rwn.News
-		now := time.Now().AddDate(0, 0, -3)
+		now := time.Now().AddDate(0, 0, -2)
 		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 99999, now.Location())).
 			Order("created_at DESC").Find(&news)
 		var currKey string
@@ -163,6 +163,8 @@ func do(c []crawlers.Crawler) {
 	}
 	if len(errorMsg) > 0 {
 		serverChan("「远程工作」抓取错误", string(errorMsg))
+	} else {
+		serverChan("「远程工作」抓取完成", time.Now().String())
 	}
 	crawling = false
 }
