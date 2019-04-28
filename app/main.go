@@ -7,7 +7,6 @@ import (
 	"net/url"
 	"reflect"
 	"strconv"
-	"strings"
 	"sync"
 	"time"
 
@@ -157,7 +156,7 @@ func do(c []crawlers.Crawler) {
 	wg.Wait()
 	now := time.Now()
 	for i := 0; i < len(allNews); i++ {
-		allNews[i].Title = strings.TrimSpace(allNews[i].Title)
+		crawlers.ClearSpace(allNews)
 		allNews[i].Hash = com.MD5(allNews[i].URL)
 		allNews[i].CreatedAt = now
 		rwn.DB.Save(allNews[i])

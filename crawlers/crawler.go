@@ -26,6 +26,7 @@ type Crawler interface {
 var request *gorequest.SuperAgent
 var matchRemoteChinese = regexp.MustCompile(`[远遠]程`)
 var matchRemoteEnglish = regexp.MustCompile(`(?i)remote`)
+var matchSpace = regexp.MustCompile(`\s+`)
 
 func init() {
 	request = gorequest.New().Retry(crawlerRetryTime, time.Second*3, http.StatusGatewayTimeout,
@@ -77,4 +78,15 @@ func innerFillContent(news []rwn.News, selector string) error {
 		time.Sleep(time.Second * crawlerDelayTime)
 	}
 	return nil
+}
+
+// ClearSpace 清理空格 换行等
+func ClearSpace(news []rwn.News) {
+	for i := 0; i < len(news); i++ {
+		news[i].Title = strings.TrimSpace(news[i].Title)
+		news[i].Content = strings.TrimSpace(news[i].Content)
+		news[i].Pusher = strings.TrimSpace(news[i].Pusher)
+		news[i].Title = matchSpace.ReplaceAllString(news[i].Title, " ")
+		news[i].Content = matchSpace.ReplaceAllString(news[i].Content, " ")
+	}
 }
