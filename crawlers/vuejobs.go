@@ -3,7 +3,6 @@ package crawlers
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"regexp"
 
 	rwn "github.com/naiba/remote-work-news"
@@ -41,7 +40,6 @@ func (v *VueJobsCrawler) FetchNews() ([]rwn.News, error) {
 	if err != nil {
 		return nil, err
 	}
-	log.Println(res[1], vjd)
 	for i := 0; i < len(vjd); i++ {
 		var item rwn.News
 		item.MediaID = 7

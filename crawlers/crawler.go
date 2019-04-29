@@ -14,7 +14,7 @@ import (
 
 const (
 	crawlerRetryTime = 3
-	crawlerDelayTime = 6
+	crawlerDelayTime = 20
 )
 
 // Crawler 爬虫

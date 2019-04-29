@@ -2,7 +2,6 @@ package main
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -27,9 +26,9 @@ func main() {
 	// os.Exit(0)
 
 	var crawlerTargetForgin = []crawlers.Crawler{
-		&crawlers.VueJobsCrawler{},
 		&crawlers.ZipRecruiterCrawler{},
 		&crawlers.StackOverFlowCrawler{},
+		&crawlers.VueJobsCrawler{},
 	}
 
 	var crawlerTargetChina = []crawlers.Crawler{
@@ -62,7 +61,6 @@ func main() {
 		chinaOffset += 24
 	}
 	usaOffset := 12 + offset + 5
-	log.Println("offset", offset, "chinaOffset:", chinaOffset, "usaOffset:", usaOffset)
 	c := cron.New()
 	c.AddFunc("0 0 "+strconv.Itoa(chinaOffset)+" * * *", func() {
 		do(crawlerTargetChina)
