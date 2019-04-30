@@ -89,7 +89,7 @@ func main() {
 		}
 		var news []rwn.News
 		now := time.Now().AddDate(0, 0, -2)
-		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), chinaOffset-12, 59, 59, 99999, now.Location())).
+		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 99999, now.Location())).
 			Order("created_at DESC").Find(&news)
 		var currKey string
 		var job struct {
