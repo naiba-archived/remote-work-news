@@ -56,11 +56,15 @@ func main() {
 	// 抓取计划
 	_, offset := time.Now().Zone()
 	offset /= 3600
+	offset = 0
 	chinaOffset := 12 + offset - 8
 	if chinaOffset < 0 {
 		chinaOffset += 24
 	}
 	usaOffset := 12 + offset + 5
+	if usaOffset > 24 {
+		usaOffset -= 24
+	}
 	c := cron.New()
 	c.AddFunc("0 0 "+strconv.Itoa(chinaOffset)+" * * *", func() {
 		do(crawlerTargetChina)
@@ -82,14 +86,24 @@ func main() {
 	})
 	r.Static("/static", "resource/static")
 	r.LoadHTMLGlob("resource/template/*")
+	hourDiff := chinaOffset - 13
+	dayDiff := -2
+	if hourDiff < 0 {
+		hourDiff += 24
+	}
+	println("dayDiff", dayDiff)
+	println("hourDiff", hourDiff)
+	println("chinaOffset", chinaOffset)
+	println("usaOffset", usaOffset)
 	r.GET("/", func(ctx *gin.Context) {
 		var jobs []struct {
 			Day  string
 			Jobs []rwn.News
 		}
 		var news []rwn.News
-		now := time.Now().AddDate(0, 0, -2)
-		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 99999, now.Location())).
+
+		now := time.Now().AddDate(0, 0, dayDiff)
+		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), hourDiff, 59, 59, 99999, now.Location())).
 			Order("created_at DESC").Find(&news)
 		var currKey string
 		var job struct {
