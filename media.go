@@ -47,10 +47,5 @@ func init() {
 			Desc: "VueJobs has been developed by Vue.js and Laravel enthusiasts whose aim is to contribute to the growing community by helping companies find Vue.js talent around the world. When you register with Vue.js jobs, companies will be able to list jobs and developers will have the chance to apply for those jobs. ",
 			Link: "https://vuejobs.com",
 		},
-		8: Media{
-			Name: "ZipRecruiter",
-			Desc: "Search for jobs hiring in your area using ZipRecruiter's job search engine - the best way to find a job.",
-			Link: "https://www.ziprecruiter.com",
-		},
 	}
 }

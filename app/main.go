@@ -26,7 +26,6 @@ func main() {
 	// os.Exit(0)
 
 	var crawlerTargetForgin = []crawlers.Crawler{
-		&crawlers.ZipRecruiterCrawler{},
 		&crawlers.StackOverFlowCrawler{},
 		&crawlers.VueJobsCrawler{},
 	}
