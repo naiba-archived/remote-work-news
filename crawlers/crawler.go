@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/naiba/com"
 	rwn "github.com/naiba/remote-work-news"
 	"github.com/parnurzeal/gorequest"
 )
@@ -69,6 +70,14 @@ func calcCreateTime(raw string) time.Time {
 }
 
 func innerFillContent(news []rwn.News, selector string) error {
+	var count int
+	for i := 0; i < len(news); i++ {
+		rwn.DB.Where("hash = ?", com.MD5(news[i].URL)).Count(&count)
+		if count > 0 {
+			news = append(news[:i], news[i:]...)
+			i--
+		}
+	}
 	for i := 0; i < len(news); i++ {
 		doc, err := getDocFromURL(news[i].URL)
 		if err != nil {
