@@ -25,7 +25,7 @@ func (y *YuanChengDotWorkCrawler) FetchNews() ([]rwn.News, error) {
 		link := title.Find("a.job-title").First()
 		newsItem.Title = "「" + title.Find("b.text-outstand").Text() + "」" + link.Text()
 		newsItem.URL = link.AttrOr("href", "")
-		newsItem.Pusher = s.Find("job-right-text").First().Text()
+		newsItem.Pusher = s.Find("div.job-right div.job-right-text").First().Text()
 		newsItem.PublishedAt, _ = time.Parse("2006-01-02 15:04:05",
 			s.Find("div.job-date").AttrOr("date", ""))
 		news = append(news, newsItem)
