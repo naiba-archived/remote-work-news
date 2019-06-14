@@ -1,6 +1,8 @@
 package crawlers
 
 import (
+	"strings"
+
 	"github.com/PuerkitoBio/goquery"
 	rwn "github.com/naiba/remote-work-news"
 )
@@ -23,7 +25,10 @@ func (s *StackOverFlowCrawler) FetchNews() ([]rwn.News, error) {
 		newsItem.MediaID = 5
 		title := s.Find("a.s-link").First()
 		newsItem.Title = title.Text()
-		newsItem.URL = stackOverFlowBase + title.AttrOr("href", "")
+		temp := strings.Split(title.AttrOr("href", ""), "/")
+		if len(temp) > 2 {
+			newsItem.URL = stackOverFlowBase + "/jobs/" + temp[2]
+		}
 		newsItem.PublishedAt = calcCreateTime(s.Find("span.ps-absolute.fc-black-500").First().Text())
 		newsItem.Pusher = s.Find("div.-company").Text()
 		if matchRemoteEnglish.MatchString((newsItem.Title)) {

@@ -20,10 +20,8 @@
                 <h3>
                     {{range $k,$v := .media}}
                     <a href="{{$v.Link}}" rel="nofollow" title="{{$v.Desc}}" target="_blank">{{$v.Name}}</a>
-                    |
+                    {{if not (last $k $.media)}}|{{end}}
                     {{end}}
-                    <a href="//shang.qq.com/wpa/qunwpa?idkey=33ec2efcc90d9a5fd17bd49161303e617d95564699b75f4df8f6ec85769ef86b"
-                        title="Q群：1016797014" target="_blank">加入交流群</a>
                 </h3>
             </nav>
             <div class="list">

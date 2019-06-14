@@ -20,17 +20,14 @@ var crawling bool
 
 func main() {
 
-	//test code
-	// x := &crawlers.VueJobsCrawler{}
+	// test code
+	// x := &crawlers.StackOverFlowCrawler{}
 	// log.Println(x.FetchNews())
 	// os.Exit(0)
 
-	var crawlerTargetForgin = []crawlers.Crawler{
+	var crawler = []crawlers.Crawler{
 		&crawlers.StackOverFlowCrawler{},
 		&crawlers.VueJobsCrawler{},
-	}
-
-	var crawlerTargetChina = []crawlers.Crawler{
 		&crawlers.LearnKuCrawler{
 			LearnKuChannel: crawlers.LearnKuGolang,
 		},
@@ -60,16 +57,9 @@ func main() {
 	if chinaOffset < 0 {
 		chinaOffset += 24
 	}
-	usaOffset := 12 + offset + 5
-	if usaOffset > 24 {
-		usaOffset -= 24
-	}
 	c := cron.New()
 	c.AddFunc("0 0 "+strconv.Itoa(chinaOffset)+" * * *", func() {
-		do(crawlerTargetChina)
-	})
-	c.AddFunc("0 0 "+strconv.Itoa(usaOffset)+" * * *", func() {
-		do(crawlerTargetForgin)
+		do(crawler)
 	})
 	c.Start()
 
@@ -82,6 +72,9 @@ func main() {
 		"tf": func(t time.Time) string {
 			return t.Format("2006-01-02 15:04")
 		},
+		"last": func(x int, a interface{}) bool {
+			return x == reflect.ValueOf(a).Len()
+		},
 	})
 	r.Static("/static", "resource/static")
 	r.LoadHTMLGlob("resource/template/*")
@@ -93,17 +86,13 @@ func main() {
 	println("dayDiff", dayDiff)
 	println("hourDiff", hourDiff)
 	println("chinaOffset", chinaOffset)
-	println("usaOffset", usaOffset)
 	r.GET("/", func(ctx *gin.Context) {
 		var jobs []struct {
 			Day  string
 			Jobs []rwn.News
 		}
 		var news []rwn.News
-
-		now := time.Now().AddDate(0, 0, dayDiff)
-		rwn.DB.Where("created_at > ?", time.Date(now.Year(), now.Month(), now.Day(), hourDiff, 59, 59, 99999, now.Location())).
-			Order("created_at DESC").Find(&news)
+		rwn.DB.Order("created_at DESC").Limit(50).Find(&news)
 		var currKey string
 		var job struct {
 			Day  string
