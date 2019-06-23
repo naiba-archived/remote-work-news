@@ -11,15 +11,15 @@ const (
 	learnKuBase     = "https://learnku.com"
 	learnKuSelector = "div.readme"
 	// LearnKuLaravel laravel
-	LearnKuLaravel = "/laravel/c/php-jobs?filter=recent"
+	LearnKuLaravel = "/laravel/c/jobs?filter=recent"
 	// LearnKuGolang golang
-	LearnKuGolang = "/golang/c/php-jobs?filter=recent"
+	LearnKuGolang = "/golang/c/jobs?filter=recent"
 	// LearnKuPHP PHP
-	LearnKuPHP = "/php/c/php-jobs?filter=recent"
+	LearnKuPHP = "/php/c/jobs?filter=recent"
 	// LearnKuVueJS VueJS
-	LearnKuVueJS = "/vuejs/c/php-jobs?filter=recent"
+	LearnKuVueJS = "/vuejs/c/jobs?filter=recent"
 	// LearnKuPython Python
-	LearnKuPython = "/python/c/php-jobs?filter=recent"
+	LearnKuPython = "/python/c/jobs?filter=recent"
 )
 
 // LearnKuCrawler LearnKu
