@@ -31,6 +31,12 @@ action "docker-push" {
 action "deploy" {
   uses = "maddox/actions/ssh@master"
   needs = ["docker-push"]
-  secrets = ["PRIVATE_KEY", "PUBLIC_KEY", "HOST", "USER", "PORT"]
+  secrets = [
+    "PRIVATE_KEY",
+    "PUBLIC_KEY",
+    "HOST",
+    "PORT",
+    "USER",
+  ]
   args = "/NAIBA/script/rwn.sh"
 }
