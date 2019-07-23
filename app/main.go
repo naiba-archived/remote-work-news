@@ -10,10 +10,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/feeds"
 	"github.com/naiba/com"
+	"github.com/robfig/cron"
+
 	rwn "github.com/naiba/remote-work-news"
 	"github.com/naiba/remote-work-news/crawlers"
-	"github.com/robfig/cron"
 )
 
 var crawling bool
@@ -79,50 +81,13 @@ func main() {
 	r.Static("/static", "resource/static")
 	r.LoadHTMLGlob("resource/template/*")
 	hourDiff := chinaOffset - 13
-	dayDiff := -2
 	if hourDiff < 0 {
 		hourDiff += 24
 	}
-	println("dayDiff", dayDiff)
-	println("hourDiff", hourDiff)
-	println("chinaOffset", chinaOffset)
-	r.GET("/", func(ctx *gin.Context) {
-		var jobs []struct {
-			Day  string
-			Jobs []rwn.News
-		}
-		var news []rwn.News
-		rwn.DB.Order("created_at DESC").Limit(50).Find(&news)
-		var currKey string
-		var job struct {
-			Day  string
-			Jobs []rwn.News
-		}
-		for i := 0; i < len(news); i++ {
-			key := news[i].CreatedAt.Format("2006-01-02")
-			if key != currKey {
-				currKey = key
-				if len(job.Jobs) > 0 {
-					jobs = append(jobs, job)
-				}
-				job = struct {
-					Day  string
-					Jobs []rwn.News
-				}{
-					Day:  currKey,
-					Jobs: make([]rwn.News, 0),
-				}
-			}
-			job.Jobs = append(job.Jobs, news[i])
-		}
-		jobs = append(jobs, job)
-		ctx.HTML(http.StatusOK, "index.html", gin.H{
-			"media":    rwn.Medias,
-			"job":      jobs,
-			"crawling": crawling,
-			"version":  rwn.C.BuildVersion,
-		})
-	})
+
+	r.GET("/feed", feed)
+	r.GET("/", index)
+
 	r.Run()
 }
 
@@ -175,4 +140,74 @@ func serverChan(title, content string) {
 		"desp": {content},
 	}
 	http.PostForm("https://sc.ftqq.com/"+rwn.C.ServerChan+".send", params)
+}
+
+func index(ctx *gin.Context) {
+	var jobs []struct {
+		Day  string
+		Jobs []rwn.News
+	}
+	var news []rwn.News
+	rwn.DB.Order("created_at DESC").Limit(50).Find(&news)
+	var currKey string
+	var job struct {
+		Day  string
+		Jobs []rwn.News
+	}
+	for i := 0; i < len(news); i++ {
+		key := news[i].CreatedAt.Format("2006-01-02")
+		if key != currKey {
+			currKey = key
+			if len(job.Jobs) > 0 {
+				jobs = append(jobs, job)
+			}
+			job = struct {
+				Day  string
+				Jobs []rwn.News
+			}{
+				Day:  currKey,
+				Jobs: make([]rwn.News, 0),
+			}
+		}
+		job.Jobs = append(job.Jobs, news[i])
+	}
+	jobs = append(jobs, job)
+	ctx.HTML(http.StatusOK, "index.html", gin.H{
+		"media":    rwn.Medias,
+		"job":      jobs,
+		"crawling": crawling,
+		"version":  rwn.C.BuildVersion,
+	})
+}
+
+func feed(ctx *gin.Context) {
+	feed := &feeds.Feed{
+		Title:       "打杂网",
+		Link:        &feeds.Link{Href: "https://daza.net"},
+		Description: "每日最新远程工作机会",
+		Author:      &feeds.Author{Name: "奶爸", Email: "hi@nai.ba"},
+	}
+	var news []rwn.News
+	rwn.DB.Order("created_at DESC").Limit(50).Find(&news)
+	for i := 0; i < len(news); i++ {
+		if i == 0 {
+			feed.Created = news[i].CreatedAt
+		}
+		feed.Items = append(feed.Items,
+			&feeds.Item{
+				Title:   news[i].Title,
+				Link:    &feeds.Link{Href: news[i].URL},
+				Content: news[i].Content,
+				Author:  &feeds.Author{Name: news[i].Pusher},
+				Created: news[i].CreatedAt,
+			},
+		)
+	}
+	atom, err := feed.ToAtom()
+	if err != nil {
+		ctx.AbortWithError(http.StatusInternalServerError, err)
+		return
+	}
+	ctx.Header("Content-Type", "application/xml")
+	ctx.String(http.StatusOK, atom)
 }

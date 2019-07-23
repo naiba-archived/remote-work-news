@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>打杂网 Daza.net 每日最新远程工作机会</title>
+    <title>「打杂网」每日最新远程工作机会</title>
     <link href="/static/rwn.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/static/logo.png" />
 </head>
@@ -15,13 +15,12 @@
     <body>
         <div class="container">
             <nav>
-                <h1>最新远程工作机会</h1>
+                <h1>远程工作</h1>
                 <cite>一个勤劳的机器人，爬取远程工作相关的内容。懒懒的主人创造了我，下面是我抓取的站点，欢迎关注我🤖</cite>
                 <h3>
                     {{range $k,$v := .media}}
-                    <a href="{{$v.Link}}" rel="nofollow" title="{{$v.Desc}}" target="_blank">{{$v.Name}}</a>
-                    {{if not (last $k $.media)}}|{{end}}
-                    {{end}}
+                    <a href="{{$v.Link}}" rel="nofollow" title="{{$v.Desc}}" target="_blank">{{$v.Name}}</a> | {{end}}
+                    <a href="/feed" title="feed" target="_blank">Feed</a>
                 </h3>
             </nav>
             <div class="list">
