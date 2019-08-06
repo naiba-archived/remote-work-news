@@ -1,6 +1,6 @@
 workflow "Build master and deploy on push" {
   on = "push"
-  resolves = ["deploy"]
+  resolves = ["docker-push"]
 }
 
 action "filter-master-branch" {
@@ -26,17 +26,4 @@ action "docker-push" {
   uses = "actions/docker/cli@8cdf801b322af5f369e00d85e9cf3a7122f49108"
   args = "push naiba/rwn"
   needs = ["docker-login"]
-}
-
-action "deploy" {
-  uses = "maddox/actions/ssh@master"
-  needs = ["docker-push"]
-  secrets = [
-    "PRIVATE_KEY",
-    "PUBLIC_KEY",
-    "HOST",
-    "PORT",
-    "USER",
-  ]
-  args = "/NAIBA/script/rwn.sh"
 }

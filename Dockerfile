@@ -3,7 +3,7 @@ FROM golang:alpine AS binarybuilder
 RUN apk --no-cache --no-progress add --virtual build-deps build-base git linux-pam-dev
 WORKDIR /rwn/
 COPY . .
-RUN go build -o rwn -ldflags="-s -w -X github.com/naiba/remote-work-news.BuildVersion=`git rev-parse HEAD`" app/main.go
+RUN go build -o rwn -ldflags="-s -w -X github.com/naiba/remote-work-news.BuildVersion=`git rev-parse HEAD`" cmd/rwn/main.go
 
 FROM alpine:latest
 RUN echo http://dl-2.alpinelinux.org/alpine/edge/community/ >>/etc/apk/repositories && apk --no-cache --no-progress add \
@@ -17,4 +17,4 @@ COPY --from=binarybuilder /rwn/rwn .
 # Configure Docker Container
 VOLUME ["/rwn/data"]
 EXPOSE 8080
-CMD ["/rwn/rwn"]
+CMD ["PORT=8080 /rwn/rwn"]
