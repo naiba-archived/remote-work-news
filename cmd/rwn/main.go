@@ -27,18 +27,16 @@ var crawling bool
 
 func main() {
 
-	if !rwn.C.Debug {
-		dir, err := os.Getwd()
-		if err != nil {
-			log.Fatal(err)
-		}
-		files, err := ioutil.ReadDir(dir)
-		if err != nil {
-			log.Fatal(err)
-		}
-		for _, f := range files {
-			log.Println(f.Name())
-		}
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	files, err := ioutil.ReadDir(dir)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, f := range files {
+		log.Println(f.Name())
 	}
 
 	// test code
