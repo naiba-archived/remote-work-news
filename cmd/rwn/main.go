@@ -4,8 +4,6 @@ package main
 
 import (
 	"html/template"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -26,19 +24,6 @@ import (
 var crawling bool
 
 func main() {
-
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("RunningDir", dir)
-	files, err := ioutil.ReadDir(dir)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, f := range files {
-		log.Println("  -", f.Name())
-	}
 
 	// test code
 	// x := &crawlers.StackOverFlowCrawler{}
