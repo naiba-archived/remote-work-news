@@ -1,6 +1,8 @@
 package rwn
 
 import (
+	"os"
+
 	"github.com/jinzhu/gorm"
 	"github.com/spf13/viper"
 
@@ -34,6 +36,9 @@ func init() {
 	err = viper.Unmarshal(&C)
 	if err != nil {
 		panic(err)
+	}
+	if len(os.Getenv("GIT_REV")) > 0 {
+		BuildVersion = os.Getenv("GIT_REV")
 	}
 	C.BuildVersion = BuildVersion[:8]
 
