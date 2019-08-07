@@ -4,8 +4,9 @@
 
 ## Dokku 部署
 
-1. `go.mod` 中定义 `go install` 路径
-2. `main.go` 中定义 `+build tag1,tag2`
-3. install 后的二进制存放在 `/app/bin`
-4. `Procfile` 中定义执行的二进制文件
-5. 执行文件夹在 `/app`
+1. `dokku config:set` 设置 ldflag
+2. `go.mod` 中定义 `go install` 路径
+3. `main.go` 中定义 `+build tag1,tag2`
+4. install 后的二进制存放在 `/app/bin`
+5. `Procfile` 中定义执行的二进制文件
+6. 执行文件夹在 `/app`

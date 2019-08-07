@@ -1,4 +1,4 @@
-// +heroku install ./cmd/...
+// +heroku install cmd/rwn
 module github.com/naiba/remote-work-news
 
 go 1.12
