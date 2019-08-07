@@ -1,1 +1,1 @@
-web: bin/rwn
+rwn: bin/rwn

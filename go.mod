@@ -1,4 +1,3 @@
-+heroku goVersion go1.12
 module github.com/naiba/remote-work-news
 
 go 1.12
